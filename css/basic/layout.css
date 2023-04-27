@@ -1,0 +1,22 @@
+.header-layout{
+    display: grid;
+    grid-template-columns:
+    minmax(20px,1fr)
+    minmax(1500px, 1fr)
+    minmax(20px, 1fr)
+    ;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+/* images layout */
+
+
+
+/* Editor layout */
+.editor-layout{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}

@@ -1,0 +1,10 @@
+.main-containor{
+    width: 1500px;
+    margin:auto;
+}
+
+.main-images{
+    height: 200px;
+    margin: 1rem;
+    cursor: pointer;
+}

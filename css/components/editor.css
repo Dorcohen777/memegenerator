@@ -1,0 +1,72 @@
+.main-editor-containor {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    gap: 50px;
+}
+
+.editor-containor .btn-action {
+    background-color: transparent;
+    border: none;
+    padding: 1rem;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    cursor: pointer;
+}
+
+.editor-containor {
+    position: relative;
+    height: 40vh;
+    width: 30vw;
+    box-shadow: -1px 0px 30px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: -1px 0px 30px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px 0px 30px 0px rgba(0, 0, 0, 0.75);
+}
+
+.div-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.div-actions button{
+    transition: 0.5s;
+}
+
+.div-actions button:hover {
+    background-color: black;
+    color: white;
+}
+
+.input-text {
+    width: 100%;
+    padding: 10px 10px;
+}
+
+.box-buttons {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    bottom: 2%;
+    left: 11%;
+}
+
+.btn-style {
+    background-color: orange;
+    color: white;
+    border-radius: 0.5rem;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: 0.5s;
+    font-weight: bold;
+}
+
+.btn-style:hover {
+    background-color: rgb(35, 27, 13);
+    color: white;
+}
+
+
