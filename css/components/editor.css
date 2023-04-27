@@ -1,72 +1,134 @@
-.main-editor-containor {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: center;
-    gap: 50px;
-}
-
-.editor-containor .btn-action {
-    background-color: transparent;
-    border: none;
-    padding: 1rem;
-    border-right: 1px solid black;
-    border-left: 1px solid black;
-    cursor: pointer;
-}
-
+/* Editor section */
 .editor-containor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  @media screen and (min-width: 768px) {
+    /* Increase the size of the editor section on larger screens */
+    .editor-containor {
+      max-width: 800px;
+      margin: 20px auto;
+    }
+  }
+  
+  /* Canvas area */
+  .canvas-area {
     position: relative;
-    height: 40vh;
-    width: 30vw;
-    box-shadow: -1px 0px 30px 0px rgba(0, 0, 0, 0.75);
-    -webkit-box-shadow: -1px 0px 30px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: -1px 0px 30px 0px rgba(0, 0, 0, 0.75);
-}
-
-.div-actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.div-actions button{
-    transition: 0.5s;
-}
-
-.div-actions button:hover {
-    background-color: black;
-    color: white;
-}
-
-.input-text {
     width: 100%;
-    padding: 10px 10px;
-}
-
-.box-buttons {
-    position: absolute;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    bottom: 2%;
-    left: 11%;
-}
-
-.btn-style {
-    background-color: orange;
-    color: white;
-    border-radius: 0.5rem;
-    border: none;
-    padding: 0.5rem;
-    cursor: pointer;
-    transition: 0.5s;
+    max-width: 500px;
+    margin-bottom: 20px;
+  }
+  
+  canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  
+  /* Text input box */
+  .box-text-input {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .input-text {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Info section */
+  .div-info {
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family:Verdana, Geneva, Tahoma, sans-serif
+  }
+  
+  .div-info h3 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+  }
+  
+  .span-font-size,
+  .span-line-pos,
+  .span-text-pos {
     font-weight: bold;
-}
-
-.btn-style:hover {
-    background-color: rgb(35, 27, 13);
-    color: white;
-}
-
-
+    color: #007bff;
+    
+  }
+  
+  /* Buttons */
+  .box-buttons {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .btn-style {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-style:hover {
+    background-color: #0056b3;
+  }
+  
+  .btn-action {
+    padding: 8px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-action:hover {
+    background-color: #0056b3;
+  }
+  
+  .color-input {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+  }
+  
+  .select-font {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  @media screen and (max-width: 768px) {
+    /* Adjust the font size and padding of buttons on smaller screens */
+    .btn-style,
+    .btn-action,
+    .color-input,
+    .select-font {
+      font-size: 14px;
+      padding: 8px;
+    }
+  }
+  

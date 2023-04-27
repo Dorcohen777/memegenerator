@@ -2,10 +2,13 @@
 
 var gInputValueUp = ''
 var gInputValueDown = ''
+var gInputValueCenter = ''
 var gTextPosition = 'up' // update span in editor
-var gFontSize = 30
 var gAlignDir = 'left'
+var gFontSize = 30
+var gLineIdx = 0
 var isLineDown = false
+var isLineCenter = false
 var isLineUp = true
 
 renderCanvasSection()
@@ -22,6 +25,7 @@ function renderCanvasSection() {
         <div class="editor-containor">
         
             <div class="div-actions">
+            
                 <button class="btn-action" onclick="onIncreaseFont()"><i class="fa-solid fa-plus"></i></button>
                 <button class="btn-action" onclick="onDecreaseFont()"><i class="fa-solid fa-minus"></i></button>
                 <button class="btn-action" onclick="onAlignLeft()"><i class="fa-solid fa-align-left"></i></button>
@@ -29,6 +33,7 @@ function renderCanvasSection() {
                 <button class="btn-action" onclick="onAlignRight()"><i class="fa-solid fa-align-right"></i></button>
                 <input type="color" onchange="onChnageColor()" class="color-input" value="#FFFFFF">
                 <button class="btn-action" onclick="onChangeDirection('up')"><i class="fa-solid fa-arrow-up"></i></button>
+                <button class="btn-action" onclick="onChangeDirection('center')"><i class="fa-solid fa-arrows-left-right"></i></button>
                 <button class="btn-action" onclick="onChangeDirection('down')"><i class="fa-solid fa-arrow-down"></i></button>
                 <select onchange="onChangeFont()" class="select-font">
                     <option value="Impact">Impact</option>
@@ -41,7 +46,7 @@ function renderCanvasSection() {
                 <input type="text" value="" placeholder="enter text" oninput="onInputText(event)" class="input-text">
             </div>
 
-            <div>
+            <div class="div-info">
             <h3> Current font size: <span class="span-font-size">${gFontSize}</span></h3>
             <h3> Current text position <span class="span-line-pos">${gTextPosition}</span></h3>
             <h3> Current text align: <span class="span-text-pos"> ${gAlignDir}</span> </h3>
@@ -50,7 +55,6 @@ function renderCanvasSection() {
             <div class="box-buttons">
                 <button class="btn-style">Share</button>
                 <button class="btn-style" onclick="onDeleteLine()"> Delete line </button>
-                <button class="btn-style" onclick="onAddLine()"> Add line </button>
                 <a href="#" onclick="downloadCanvas(this)" download="new-meme"><button class="btn-style">Download</button></a>
                 <button class="btn-style"> Save for later </button>
             <div>
@@ -72,20 +76,7 @@ function onInputText(ev) {
     let x = 10 // default x
     let y = 50 // default y
 
-    // Check if Backspace key was pressed
-    if (ev.inputType === 'deleteContentBackward') {
-        if (isLineUp) {
-            gInputValueUp = gInputValueUp.slice(0, -1)
-        } else {
-            gInputValueDown = gInputValueDown.slice(0, -1)
-        }
-    } else {
-        if (isLineUp) { // save the values from the txt input
-            gInputValueUp = inputValue
-        } else {
-            gInputValueDown = inputValue
-        }
-    }
+    handleBackspace(ev, inputValue) // handle backspace
 
     let { gCtx } = getCanvas()
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height) // clear rect
@@ -93,16 +84,20 @@ function onInputText(ev) {
 
     x = handleAlign(gAlignDir) // handle text align
 
+    if (isLineCenter) {
+        renderTextInImage(gInputValueCenter, x, y, onChnageColor(), gAlignDir, fontFamily,)
+    }
+
     if (gInputValueUp) {
-        renderTextInImage(gInputValueUp, x, y, onChnageColor(), gAlignDir, fontFamily, 10, y - 35)
+        renderTextInImage(gInputValueUp, x, y, onChnageColor(), gAlignDir, fontFamily,)
     }
 
     if (gInputValueDown) {
         const y = isLineDown ? bottomLineY : 250 // bottom of the canva
-        renderTextInImage(gInputValueDown, x, y, onChnageColor(), gAlignDir, fontFamily, 10, y - 40)
+        renderTextInImage(gInputValueDown, x, y, onChnageColor(), gAlignDir, fontFamily,)
     }
 
-    saveToGmeme(0, inputValue, gFontSize, gAlignDir, onChnageColor())
+    saveToGmeme(gLineIdx, inputValue, gFontSize, gAlignDir, onChnageColor())
 }
 
 // handle text render
@@ -114,15 +109,18 @@ function renderTextInImage(textValue, x, y, color = 'white', textPosition, fontF
     gCtx.font = `${gFontSize}px "${fontFamily}"`
     gCtx.fillStyle = color
     gCtx.fillText(textValue, x, y)
-    
+
 }
 
 // change direction on lines 
 function onChangeDirection(direction) {
     isLineUp = direction === 'up'
     isLineDown = direction === 'down'
+    isLineCenter = direction === 'center'
+
     if (isLineUp) gTextPosition = 'up'
-    else gTextPosition = 'down'
+    else if (isLineDown) gTextPosition = 'down'
+    else if (isLineCenter) gTextPosition = 'center'
 
     onChangeLine()
 }
@@ -201,9 +199,31 @@ function handleAlign(direction) {
     return x;
 }
 
-
 function onChangeFont() {
     const fontValue = document.querySelector('.select-font').value
     return fontValue
 }
 
+function handleBackspace(event, inputValue) {
+    if (event.inputType === 'deleteContentBackward') {
+        if (isLineUp) {
+            gInputValueUp = gInputValueUp.slice(0, -1)
+        } else {
+            gInputValueDown = gInputValueDown.slice(0, -1)
+        }
+    } else {
+        if (isLineUp) { // save the values from the txt input
+            gInputValueUp = inputValue
+        } else {
+            gInputValueDown = inputValue
+        }
+    }
+}
+
+function onDeleteLine(){
+    var { gCtx, gCanvas } = getCanvas()
+    console.log('click')
+    const elInput = document.querySelector('.input-text')
+    const inputVal = elInput.value = ''
+    
+}

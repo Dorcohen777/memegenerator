@@ -1,10 +1,23 @@
-.main-containor{
-    width: 1500px;
-    margin:auto;
-}
-
-.main-images{
-    height: 200px;
-    margin: 1rem;
+.images-container {
+    display: grid;
+    grid-template-columns: 1fr minmax(1300px, 1fr) 1fr;
+    grid-gap: 1rem;
+  }
+  
+  .main-containor {
+    grid-column: 2;
+  }
+  
+  .main-images {
+    height: auto;
+    max-height: 229px;
+    margin:0;
     cursor: pointer;
-}
+  }
+  
+  
+  @media (max-width: 768px) {
+    .images-container {
+      grid-template-columns: 1fr;
+    }
+  }
