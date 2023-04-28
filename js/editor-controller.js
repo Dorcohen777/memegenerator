@@ -3,6 +3,7 @@
 var gInputValueUp = ''
 var gInputValueDown = ''
 var gInputValueCenter = ''
+
 var gTextPosition = 'up' // update span in editor
 var gAlignDir = 'left'
 var gFontSize = 30
@@ -54,9 +55,9 @@ function renderCanvasSection() {
 
             <div class="box-buttons">
                 <button class="btn-style">Share</button>
-                <button class="btn-style" onclick="onDeleteLine()"> Delete line </button>
+                <button class="btn-style" onclick="onClear()"> Clear </button>
                 <a href="#" onclick="downloadCanvas(this)" download="new-meme"><button class="btn-style">Download</button></a>
-                <button class="btn-style"> Save for later </button>
+                <button class="btn-style" onclick="onSaveMeme()"> Save for later </button>
             <div>
         </div>
     <div/>
@@ -84,8 +85,9 @@ function onInputText(ev) {
 
     x = handleAlign(gAlignDir) // handle text align
 
-    if (isLineCenter) {
-        renderTextInImage(gInputValueCenter, x, y, onChnageColor(), gAlignDir, fontFamily,)
+    if (gInputValueCenter) {
+        let yMiddle = gCanvas.width / 2
+        renderTextInImage(gInputValueCenter, x, yMiddle, onChnageColor(), gAlignDir, fontFamily,)
     }
 
     if (gInputValueUp) {
@@ -97,7 +99,9 @@ function onInputText(ev) {
         renderTextInImage(gInputValueDown, x, y, onChnageColor(), gAlignDir, fontFamily,)
     }
 
-    saveToGmeme(gLineIdx, inputValue, gFontSize, gAlignDir, onChnageColor())
+    let fontType = onChangeFont()
+    let imgId = getImageId(gCurrImage) // get img id 
+    saveToGmeme([gInputValueUp, gInputValueCenter, gInputValueDown], gFontSize, gAlignDir, onChnageColor(), imgId, x, y, fontType)
 }
 
 // handle text render
@@ -183,6 +187,8 @@ function onAlignCenter() {
     var { gCtx, gCanvas } = getCanvas()
     const xCenter = (gCanvas.width / 2)
     gAlignDir = 'center'
+
+
     onChangeAlign()
     return xCenter
 }
@@ -208,22 +214,35 @@ function handleBackspace(event, inputValue) {
     if (event.inputType === 'deleteContentBackward') {
         if (isLineUp) {
             gInputValueUp = gInputValueUp.slice(0, -1)
-        } else {
+        } else if (isLineDown) {
             gInputValueDown = gInputValueDown.slice(0, -1)
+        } else {
+            gInputValueCenter = gInputValueCenter.slice(0, -1)
         }
     } else {
         if (isLineUp) { // save the values from the txt input
             gInputValueUp = inputValue
-        } else {
+        } else if (isLineDown) {
             gInputValueDown = inputValue
+        } else {
+            gInputValueCenter = inputValue
         }
     }
 }
 
-function onDeleteLine(){
-    var { gCtx, gCanvas } = getCanvas()
-    console.log('click')
-    const elInput = document.querySelector('.input-text')
-    const inputVal = elInput.value = ''
-    
+function onSaveMeme() {
+    let imgId = getImageId(gCurrImage)
+    saveToGmeme([gInputValueUp, gInputValueCenter, gInputValueDown], gFontSize, gAlignDir, onChnageColor(), imgId)
 }
+
+function onClear() {
+    let memes = getGmeme()
+    gInputValueCenter = ''
+    gInputValueDown = ''
+    gInputValueUp = ''
+    console.log('memes', memes)
+    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height) //clear rect
+    gCtx.drawImage(gCurrImage, 0, 0, gCanvas.width, gCanvas.height) // render image in canvas
+   // renderTextInImage(memes.txt[0], xCenter, memes.pos[1], onChnageColor(), gAlignDir, memes.fontFamily,)
+}
+
