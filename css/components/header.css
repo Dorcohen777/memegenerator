@@ -76,7 +76,7 @@
   opacity: 0.8;
 }
 
-input[type="text"] {
+.input-search {
   border: none;
   border-bottom: 2px solid #ccc;
   padding: 10px;
@@ -85,11 +85,11 @@ input[type="text"] {
   background-color: transparent;
 }
 
-input[type="text"]::placeholder {
+.input-search::placeholder {
   color: whitesmoke;
 }
 
-input[type="text"]:focus {
+.input-search:focus {
   outline: none;
   border-bottom: 2px solid #66afe9;
 }
